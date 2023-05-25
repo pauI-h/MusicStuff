@@ -47,39 +47,39 @@ def gotoTab(name: str):
 
 def selectRow(row_num: int):
     pyautogui.press("left")
-    time.sleep(1)
+    time.sleep(0.2)
     if OS == "WIN":
         print("Win")
         pyautogui.hotkey("ctrl", "home")  # command fn left
     else:
         pyautogui.hotkey("command", "fn", "left")
 
-    time.sleep(1)
+    time.sleep(0.2)
     pyautogui.press("right")
     print("right")
 
-    time.sleep(1)
+    time.sleep(0.2)
     if OS == "WIN":
         print("win")
         pyautogui.keyDown("alt")  # option
     else:
         pyautogui.keyDown("option")
 
-    time.sleep(1)
+    time.sleep(0.2)
 
     for i in range(row_num):
         time.sleep(0.3)
         print("down")
         pyautogui.press("down")
 
-    time.sleep(1)
+    time.sleep(0.2)
 
     if OS == "WIN":
         pyautogui.keyUp("alt")  # option
     else:
         pyautogui.keyUp("option")
 
-    time.sleep(1)
+    time.sleep(0.2)
 
     if OS == "WIN":
         print("win - 2")
@@ -111,7 +111,7 @@ def export(row: int, window_name: str, file_name: str):
         press += 1
     for i in range(press):
         pyautogui.press("down")
-    time.sleep(1)
+    time.sleep(0.2)
     pyautogui.press("enter")
 
     if OS == "APP" and window_name not in getName():
@@ -172,5 +172,5 @@ if __name__ == "__main__":
     size = pyautogui.size()
     pyautogui.moveTo(size[0]/2, 1)
     selectRow(3)
-    #shiftRow(2)
-    #export(3, name, "Get Lucky Lower Bass")
+    shiftRow(2)
+    export(3, name, "Get Lucky Lower Bass")
