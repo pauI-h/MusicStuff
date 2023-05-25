@@ -82,14 +82,17 @@ def selectRow(row_num: int):
     time.sleep(1)
 
     if OS == "WIN":
-        pyautogui.keyDown("shift")
-        time.sleep(1)
+        print("win - 2")
+        pyautogui.keyDown('shiftleft')
+        pyautogui.keyDown('shiftright')
+        time.sleep(0.4)
 
         pyautogui.keyDown("ctrl")
-        time.sleep(1)
+        time.sleep(0.4)
 
         pyautogui.press("end")
-        pyautogui.keyUp("shift")
+        pyautogui.keyUp('shiftleft')
+        pyautogui.keyUp('shiftright')
         pyautogui.keyUp("ctrl")
 
 
@@ -159,6 +162,7 @@ def shifter(tab_name: str, new_file_name: str, row_to_shift: int, amount_to_shif
 
 
 if __name__ == "__main__":
+    print(pyautogui.KEYBOARD_KEYS)
     if sys.platform == "win32":
         name = "Get"
     else:
