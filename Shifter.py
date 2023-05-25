@@ -136,7 +136,12 @@ def shifter(tab_name: str, new_file_name: str, row_to_shift: int, amount_to_shif
 
 
 if __name__ == "__main__":
-    gotoTab("Get")
+    if sys.platform == "win32":
+        name = "Get"
+    else:
+        name = "Muse"
+
+    gotoTab(name)
     selectRow(3)
     shiftRow(2)
-    export(3, "Get", "Get Lucky Lower Bass")
+    export(3, name, "Get Lucky Lower Bass")
