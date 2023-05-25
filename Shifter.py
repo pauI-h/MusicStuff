@@ -47,27 +47,50 @@ def gotoTab(name: str):
 
 def selectRow(row_num: int):
     pyautogui.press("left")
+    time.sleep(1)
     if OS == "WIN":
+        print("Win")
         pyautogui.hotkey("ctrl", "home")  # command fn left
     else:
         pyautogui.hotkey("command", "fn", "left")
-    pyautogui.press("right")
 
+    time.sleep(1)
+    pyautogui.press("right")
+    print("right")
+
+    time.sleep(1)
     if OS == "WIN":
+        print("win")
         pyautogui.keyDown("alt")  # option
     else:
         pyautogui.keyDown("option")
 
+    time.sleep(1)
+
     for i in range(row_num):
-        print(i)
+        time.sleep(0.3)
+        print("down")
         pyautogui.press("down")
+
+    time.sleep(1)
 
     if OS == "WIN":
         pyautogui.keyUp("alt")  # option
     else:
         pyautogui.keyUp("option")
 
-    pyautogui.hotkey("ctrl", "shift", "end")  # shift command fn right
+    time.sleep(1)
+
+    if OS == "WIN":
+        pyautogui.keyDown("shift")
+        time.sleep(1)
+
+        pyautogui.keyDown("ctrl")
+        time.sleep(1)
+
+        pyautogui.press("end")
+        pyautogui.keyUp("shift")
+        pyautogui.keyUp("ctrl")
 
 
 def shiftRow(shift: int):
@@ -142,6 +165,8 @@ if __name__ == "__main__":
         name = "Muse"
 
     gotoTab(name)
+    size = pyautogui.size()
+    pyautogui.moveTo(size[0]/2, 1)
     selectRow(3)
-    shiftRow(2)
-    export(3, name, "Get Lucky Lower Bass")
+    #shiftRow(2)
+    #export(3, name, "Get Lucky Lower Bass")
