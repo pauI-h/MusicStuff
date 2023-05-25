@@ -89,6 +89,7 @@ def export(row: int, window_name: str, file_name: str):
     pyautogui.press("enter")
 
     if OS == "APP" and window_name not in getName():
+        pyautogui.press("esc")
         gotoTab(window_name)
         export(row, window_name, file_name)
         return
@@ -100,6 +101,7 @@ def export(row: int, window_name: str, file_name: str):
             return
 
         if "Export" not in getName():
+            pyautogui.press("esc")
             gotoTab(window_name)
             export(row, window_name, file_name)
             return
@@ -126,7 +128,15 @@ def export(row: int, window_name: str, file_name: str):
     pyautogui.press("enter")
 
 
-gotoTab("Get")
-selectRow(3)
-shiftRow(2)
-export(3, "Get", "Get Lucky Lower Bass")
+def shifter(tab_name: str, new_file_name: str, row_to_shift: int, amount_to_shift: int):
+    gotoTab(tab_name)
+    selectRow(row_to_shift)
+    shiftRow(amount_to_shift)
+    export(row_to_shift, tab_name, new_file_name)
+
+
+if __name__ == "__main__":
+    gotoTab("Get")
+    selectRow(3)
+    shiftRow(2)
+    export(3, "Get", "Get Lucky Lower Bass")
