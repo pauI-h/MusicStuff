@@ -153,6 +153,12 @@ def export(row: int, window_name: str, file_name: str):
     pyautogui.write(file_name)
     pyautogui.press("enter")
 
+    if "Confirm Save" in getName():
+        print("Confirming Name")
+        pyautogui.press("left")
+        pyautogui.press("enter")
+
+
 
 def shifter(tab_name: str, new_file_name: str, row_to_shift: int, amount_to_shift: int):
     gotoTab(tab_name)
