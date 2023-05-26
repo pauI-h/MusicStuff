@@ -3,46 +3,7 @@ import time
 
 import pyautogui
 
-OS = "APP"
-if sys.platform == "win32":
-    from win32gui import GetForegroundWindow, GetWindowText
-
-    OS = "WIN"
-
-
-    def getName():
-        return GetWindowText(GetForegroundWindow())
-else:
-    from AppKit import NSWorkspace
-
-
-    def getName():
-        return NSWorkspace.sharedWorkspace().activeApplication()
-
-
-def gotoTab(name: str):
-    window = getName()
-    count = 0
-    while name not in str(window):
-        count += 1
-        if OS == "WIN":
-            pyautogui.keyDown("alt")
-        else:
-            pyautogui.keyDown("command")
-
-        for i in range(count):
-            pyautogui.press("tab")
-
-        if OS == "WIN":
-            pyautogui.keyUp("alt")
-        else:
-            pyautogui.keyUp("command")
-
-        window = getName()
-        print(getName())
-        if count > 10:
-            raise Exception("Could not find tab")
-        # time.sleep()
+from Util import gotoExport, gotoTab, getName, OS
 
 
 def selectRow(row_num: int):
@@ -102,35 +63,7 @@ def shiftRow(shift: int):
 
 
 def export(row: int, window_name: str, file_name: str):
-    pyautogui.press("left")
-    pyautogui.moveTo(1, 1)
-    pyautogui.click()
-    time.sleep(0.5)
-    press = 11
-    if OS != "WIN":
-        press += 1
-    for i in range(press):
-        pyautogui.press("down")
-    time.sleep(0.2)
-    pyautogui.press("enter")
-
-    if OS == "APP" and window_name not in getName():
-        pyautogui.press("esc")
-        gotoTab(window_name)
-        export(row, window_name, file_name)
-        return
-
-    if OS == "WIN":
-        if "Log in" in getName():
-            pyautogui.press("esc")
-            export(row, window_name, file_name)
-            return
-
-        if "Export" not in getName():
-            pyautogui.press("esc")
-            gotoTab(window_name)
-            export(row, window_name, file_name)
-            return
+    gotoExport(window_name)
 
     time.sleep(0.5)
     pyautogui.press("enter")
