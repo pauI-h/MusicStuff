@@ -41,7 +41,7 @@ def pdfExporter(window_name: str, name_to_use: str, part_list: list):
             pyautogui.press("enter")
 
         while window_name not in getName():
-            time.sleep(0.5)
+            time.sleep(0.1)
 
         count += 1
 

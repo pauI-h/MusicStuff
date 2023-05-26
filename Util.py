@@ -24,7 +24,7 @@ def gotoExport(window_name):
     pyautogui.press("left")
     pyautogui.moveTo(1, 1)
     pyautogui.click()
-    time.sleep(0.5)
+    time.sleep(0.3)
     press = 11
     if OS != "WIN":
         press += 1
