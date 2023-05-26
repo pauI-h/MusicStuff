@@ -159,12 +159,25 @@ def export(row: int, window_name: str, file_name: str):
         pyautogui.press("enter")
 
 
+def reset(tab_name: str, max_wait=60 * 10):
+    wait = 0
+    start_time = time.time()
+    while wait < max_wait:
+        time.sleep(1)
+        if tab_name in getName():
+            for i in range(3):
+                pyautogui.hotkey("ctrl", "z")
+                time.sleep(0.3)
+            break
+        wait = time.time() - start_time
+
 
 def shifter(tab_name: str, new_file_name: str, row_to_shift: int, amount_to_shift: int):
     gotoTab(tab_name)
     selectRow(row_to_shift)
     shiftRow(amount_to_shift)
     export(row_to_shift, tab_name, new_file_name)
+    reset(tab_name)
 
 
 if __name__ == "__main__":
@@ -176,7 +189,7 @@ if __name__ == "__main__":
 
     gotoTab(name)
     size = pyautogui.size()
-    pyautogui.moveTo(size[0]/2, 1)
+    pyautogui.moveTo(size[0] / 2, 1)
     selectRow(3)
     shiftRow(2)
     export(3, name, "Get Lucky Lower Bass")
