@@ -2,10 +2,10 @@ import time
 
 import pyautogui
 
-from Util import gotoTab, getName, gotoExport
+from Util import gotoTab, getName, gotoExport, getPixelValue
 
 
-def partExporter(window_name, name_to_use, part_list):
+def purePartExporter(window_name, name_to_use, part_list):
     count = 1
 
     for part in part_list:
@@ -51,5 +51,92 @@ def partExporter(window_name, name_to_use, part_list):
         count += 1
 
 
+def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, backing_volume):
+    # 1/11th of the screen
+    size = pyautogui.size()
+    x = size[0] // 11
+    y = (11 * size[1]) // 19 - 10
+
+    gotoTab(window_name)
+    pyautogui.hotkey("fn", "f10")
+
+    base_value = getPixelValue(x, y)
+    pyautogui.moveTo(x, y)
+    selected_value = getPixelValue(x, y)
+
+    pyautogui.moveTo(size[0] / 2, 1)
+
+    for part in range(len(part_list)):
+        setPart(base_value, x, y, part, len(part_list), main_part_volume, backing_volume)
+        gotoExport(window_name)
+
+        pyautogui.press("tab")
+        pyautogui.press("tab")
+        pyautogui.press("enter")
+
+        for i in range(3):
+            pyautogui.press("down")
+        pyautogui.press("enter")
+
+        pyautogui.press("tab")
+        pyautogui.press("enter")
+
+        time.sleep(0.3)
+        pyautogui.write(name_to_use + part_list[part])
+        pyautogui.press("enter")
+
+        if "Confirm Save" in getName():
+            print("Confirming Name")
+            pyautogui.press("left")
+            pyautogui.press("enter")
+
+        while window_name not in getName():
+            time.sleep(1)
+
+    resetParts(base_value, x, y, len(part_list), backing_volume)
+
+def setPart(base_value, x, y, part_num, num_parts, main_volume, other_volume):
+    while getPixelValue(x, y) == base_value:
+        pyautogui.press("tab")
+
+    time.sleep(0.3)
+    if part_num == 0:
+        for i in range(4):
+            time.sleep(0.1)
+            pyautogui.press("down")
+
+    for i in range(num_parts):
+        if i == part_num:
+            if i != 0:
+                for i in range(main_volume - other_volume):
+                    pyautogui.press("right")
+            if main_volume > 0:
+                key = "left"
+            else:
+                key = "right"
+            for i in range(abs(main_volume)):
+                pyautogui.press(key)
+        else:
+            if i == part_num - 1 or part_num == 0:
+                print(main_volume - other_volume)
+                for i in range(main_volume - other_volume):
+                    pyautogui.press("left")
+
+        pyautogui.press("tab")
+
+def resetParts(base_value, x, y, num_parts, other_volume):
+    while getPixelValue(x, y) == base_value:
+        pyautogui.press("tab")
+
+    time.sleep(0.3)
+    for i in range(num_parts-1):
+        for i in range(-1*other_volume):
+            pyautogui.press("right")
+        for i in range(other_volume):
+            pyautogui.press("left")
+        pyautogui.press("tab")
+
+
 if __name__ == "__main__":
-    partExporter("Get", "GetLucky", ["Sop", "Mezzo", "Alto", "Baritone"])
+    backedPartExporter("Get", "GetLucky", ["Sop", "Mezzo", "Alto", "Baritone"], 0, -30)
+    # purePartExporter("Get", "GetLucky", ["Sop", "Mezzo", "Alto", "Baritone"])

@@ -5,7 +5,7 @@ import pyautogui
 
 OS = "APP"
 if sys.platform == "win32":
-    from win32gui import GetForegroundWindow, GetWindowText
+    from win32gui import GetForegroundWindow, GetWindowText, GetPixel, GetDC, GetActiveWindow
 
     OS = "WIN"
 
@@ -75,3 +75,8 @@ def gotoTab(name: str):
         if count > 10:
             raise Exception("Could not find tab")
         # time.sleep()
+
+
+def getPixelValue(x, y):
+    if OS == "WIN":
+        return GetPixel(GetDC(GetActiveWindow()), x, y)
