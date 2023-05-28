@@ -60,6 +60,7 @@ def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, ba
     gotoTab(window_name)
     pyautogui.hotkey("fn", "f10")
 
+    time.sleep(1)
     base_value = getPixelValue(x, y)
     pyautogui.moveTo(x, y)
     selected_value = getPixelValue(x, y)
@@ -95,6 +96,7 @@ def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, ba
 
     resetParts(base_value, x, y, len(part_list), backing_volume)
 
+
 def setPart(base_value, x, y, part_num, num_parts, main_volume, other_volume):
     while getPixelValue(x, y) == base_value:
         pyautogui.press("tab")
@@ -124,13 +126,14 @@ def setPart(base_value, x, y, part_num, num_parts, main_volume, other_volume):
 
         pyautogui.press("tab")
 
+
 def resetParts(base_value, x, y, num_parts, other_volume):
     while getPixelValue(x, y) == base_value:
         pyautogui.press("tab")
 
     time.sleep(0.3)
-    for i in range(num_parts-1):
-        for i in range(-1*other_volume):
+    for i in range(num_parts - 1):
+        for i in range(-1 * other_volume):
             pyautogui.press("right")
         for i in range(other_volume):
             pyautogui.press("left")

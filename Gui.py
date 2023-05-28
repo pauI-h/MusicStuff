@@ -1,6 +1,6 @@
 from appJar import gui
 
-from PartExporter import purePartExporter
+from PartExporter import purePartExporter, backedPartExporter
 from PdfExporter import pdfExporter
 from Shifter import shifter
 
@@ -27,6 +27,14 @@ def createGui():
             parts = app.getEntry("Part Names").split(", ")
             purePartExporter(name, file, parts)
 
+        if button == "Export Rehearsal Piano":
+            name = app.getEntry("Score Name")
+            file = app.getEntry("New File Name")
+            parts = app.getEntry("Part Names").split(", ")
+            main_volume = int(app.getEntry("Main Volume"))
+            backing_volume = int(app.getEntry("Backing Volume"))
+            backedPartExporter(name, file, parts, main_volume, backing_volume)
+
     app = gui("MusicShifter", "600x300")
     app.addLabel("title", "MusicShifter")
     app.addLabelEntry("Score Name")
@@ -34,7 +42,9 @@ def createGui():
     app.addLabelNumericEntry("Row To Change")
     app.addLabelNumericEntry("Amount To Shift Down By")
     app.addLabelEntry("Part Names")
-    app.addButtons(["Enter", "Export PDFs", "Export Single Piano"], press)
+    app.addLabelNumericEntry("Backing Volume")
+    app.addLabelNumericEntry("Main Volume")
+    app.addButtons(["Enter", "Export PDFs", "Export Single Piano", "Export Rehearsal Piano"], press)
     app.go()
 
 

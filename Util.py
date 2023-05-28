@@ -5,7 +5,7 @@ import pyautogui
 
 OS = "APP"
 if sys.platform == "win32":
-    from win32gui import GetForegroundWindow, GetWindowText, GetPixel, GetDC, GetActiveWindow
+    from win32gui import GetForegroundWindow, GetWindowText
 
     OS = "WIN"
 
@@ -77,6 +77,13 @@ def gotoTab(name: str):
         # time.sleep()
 
 
-def getPixelValue(x, y):
+def getPixelValue(x, y, handle=True):
     if OS == "WIN":
-        return GetPixel(GetDC(GetActiveWindow()), x, y)
+        try:
+            return pyautogui.pixel(x, y)
+        except Exception as e:
+            if handle:
+                time.sleep(0.5)
+                return getPixelValue(x, y, False)
+            else:
+                raise e
