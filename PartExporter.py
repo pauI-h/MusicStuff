@@ -98,12 +98,11 @@ def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, ba
         pyautogui.write(name_to_use + part_list[part])
         pyautogui.press("enter")
 
-        if "Confirm Save" in getName():
-            print("Confirming Name")
-            pyautogui.press("left")
-            pyautogui.press("enter")
-
         while window_name not in getName():
+            if "Confirm Save" in getName():
+                print("Confirming Name")
+                pyautogui.press("left")
+                pyautogui.press("enter")
             time.sleep(1)
 
     resetParts(base_value, x, y, len(part_list), backing_volume)
