@@ -5,6 +5,18 @@ import pyautogui
 from Util import gotoTab, getName, gotoExport, getPixelValue
 
 
+def loadFromConfig():
+    file = open("Config.txt", "r")
+    lines = file.readlines()
+    file.close()
+    offset_line = lines[0].strip("\n")
+    offset = int(offset_line.split(":")[1])
+    return offset
+
+
+OFFSET = loadFromConfig()
+
+
 def purePartExporter(window_name, name_to_use, part_list):
     count = 1
 
@@ -55,7 +67,7 @@ def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, ba
     # 1/11th of the screen
     size = pyautogui.size()
     x = size[0] // 11
-    y = (11 * size[1]) // 19 - 10
+    y = (11 * size[1]) // 19 + OFFSET
 
     gotoTab(window_name)
     pyautogui.hotkey("fn", "f10")
