@@ -87,3 +87,9 @@ def getPixelValue(x, y, handle=True):
                 return getPixelValue(x, y, False)
             else:
                 raise e
+
+
+def writeName(name, part):
+    time.sleep(0.3)
+    pyautogui.write(part + "_" + name)
+    pyautogui.press("enter")

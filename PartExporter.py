@@ -2,7 +2,7 @@ import time
 
 import pyautogui
 
-from Util import gotoTab, getName, gotoExport, getPixelValue
+from Util import gotoTab, getName, gotoExport, getPixelValue, writeName
 
 
 def loadFromConfig():
@@ -94,9 +94,7 @@ def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, ba
         pyautogui.press("tab")
         pyautogui.press("enter")
 
-        time.sleep(0.3)
-        pyautogui.write(name_to_use + part_list[part])
-        pyautogui.press("enter")
+        writeName(name_to_use, part_list[part])
 
         while window_name not in getName():
             if "Confirm Save" in getName():
