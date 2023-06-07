@@ -3,7 +3,7 @@ import time
 
 import pyautogui
 
-from Util import gotoExport, gotoTab, getName, OS
+from Util import gotoExport, gotoTab, getName, OS, confirmNameAndWait
 
 
 def selectRow(row_num: int):
@@ -61,6 +61,9 @@ def shiftRow(shift: int):
     for i in range(shift):
         pyautogui.press("down")
 
+    for i in range(-1*shift):
+        pyautogui.press("up")
+
 
 def export(row: int, window_name: str, file_name: str):
     gotoExport(window_name)
@@ -86,10 +89,7 @@ def export(row: int, window_name: str, file_name: str):
     pyautogui.write(file_name)
     pyautogui.press("enter")
 
-    if "Confirm Save" in getName():
-        print("Confirming Name")
-        pyautogui.press("left")
-        pyautogui.press("enter")
+    confirmNameAndWait(window_name)
 
 
 def reset(tab_name: str, max_wait=60 * 10):
