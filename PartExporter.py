@@ -2,7 +2,7 @@ import time
 
 import pyautogui
 
-from Util import gotoTab, getName, gotoExport, getPixelValue, writeName
+from Util import gotoTab, gotoExport, getPixelValue, writeName, confirmNameAndWait
 
 
 def loadFromConfig():
@@ -45,20 +45,13 @@ def purePartExporter(window_name, name_to_use, part_list):
         pyautogui.press("enter")
 
         pyautogui.press("backspace")
-        name = name_to_use + part
-        print(name)
-        pyautogui.write(name)
+
+        writeName(name_to_use, part)
 
         pyautogui.press("enter")
         # time.sleep(0.1)
 
-        if "Confirm Save" in getName():
-            print("Confirming Name")
-            pyautogui.press("left")
-            pyautogui.press("enter")
-
-        while window_name not in getName():
-            time.sleep(0.1)
+        confirmNameAndWait(window_name)
 
         count += 1
 
@@ -96,12 +89,7 @@ def backedPartExporter(window_name, name_to_use, part_list, main_part_volume, ba
 
         writeName(name_to_use, part_list[part])
 
-        while window_name not in getName():
-            if "Confirm Save" in getName():
-                print("Confirming Name")
-                pyautogui.press("left")
-                pyautogui.press("enter")
-            time.sleep(1)
+        confirmNameAndWait(window_name)
 
     resetParts(base_value, x, y, len(part_list), backing_volume)
 

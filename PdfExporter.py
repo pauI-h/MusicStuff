@@ -2,7 +2,7 @@ import time
 
 import pyautogui
 
-from Util import gotoExport, gotoTab, getName, writeName
+from Util import gotoExport, gotoTab, getName, writeName, confirmNameAndWait
 
 
 def pdfExporter(window_name: str, name_to_use: str, part_list: list):
@@ -32,13 +32,7 @@ def pdfExporter(window_name: str, name_to_use: str, part_list: list):
         pyautogui.press("enter")
         # time.sleep(0.1)
 
-        if "Confirm Save" in getName():
-            print("Confirming Name")
-            pyautogui.press("left")
-            pyautogui.press("enter")
-
-        while window_name not in getName():
-            time.sleep(0.1)
+        confirmNameAndWait(window_name)
 
         count += 1
 

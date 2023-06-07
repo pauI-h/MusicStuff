@@ -93,3 +93,12 @@ def writeName(name, part):
     time.sleep(0.3)
     pyautogui.write(part + "_" + name)
     pyautogui.press("enter")
+
+
+def confirmNameAndWait(window_name):
+    while window_name not in getName():
+        if "Confirm Save" in getName():
+            print("Confirming Name")
+        pyautogui.press("left")
+        pyautogui.press("enter")
+        time.sleep(0.1)
